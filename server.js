@@ -18,38 +18,49 @@ var database = firebase.database();
 var ref = database.ref('boards/');
 
 app.post('/board', (request,response) => {
-    var title = request.body.title;
+    var title = request.body.title.toString();
     ref.push({
         title,
     }).then((value) => response.send(value.key)).catch((error) => console.log(error));
 });
 
 app.delete('/board/:key', (request, response) => {
-    var key = request.params.key;
-    ref.child(key.toString()).remove().then((value) => {
+    var boardKey = request.params.key.toString();
+    ref.child(boardKey).remove().then((value) => {
         response.send(`Successfully deleted`);
     }).catch((error) => console.error(error));
 });
 
 app.post('/list', (request, response) => {
-    var boardKey = request.body.key;
+    var boardKey = request.body.boardKey.toString();
     var title = request.body.title;
-    var cards = "empty";
-    var listRef = ref.child(boardKey.toString() + '/list');
+    var listRef = ref.child(boardKey + '/list');
     listRef.push({
-        title,
+        title
     }).then((value) => response.send(value.key)).catch((error) => console.log(error));
 });
 
 app.delete('/list/:key', (request, response) => {
-    var boardKey = request.body.key;
-    var listKey = request.params.key;
-    ref.child(boardKey.toString() + '/list/' + listKey.toString()).remove().then((value) => {
+    var boardKey = request.body.boardKey.toString();
+    var listKey = request.params.key.toString();
+    ref.child(boardKey + '/list/' + listKey).remove().then((value) => {
         response.send(`Successfully deleted`);
     }).catch((error) => console.error(error));
 });
 
-app.post('/card')
+app.post('/card', (request, reponse) => {
+     var boardKey = request.body.boardKey;
+     var listKey = request.body.listKey;
+     var title = request.body.title;
+     var cardRef = ref.child(boardKey + '/list/' + listKey + '/card');
+     cardRef.push({
+         title
+     });
+});
+
+app.delete('/card/:key', (request, reponse) => {
+
+});
 
 
 app.listen(3000, () => {
