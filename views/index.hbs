@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/index.css">
+
+
+  </head>
+  <body>
+    <div class="container-fluid" >
+        <div class="container">
+            <div id="header" class="row">
+              <div id="logo" class="col-xs-4 "></div>
+              <div id="title" class="col-xs-4 "><h1>TD-LIST</h1></div>
+              <div id="loginBtnDiv" class="col-xs-4" >
+                  <button id="loginBtn" class="btn btn-default" type="button"  data-toggle="modal" data-target="#loginModal">Sign In</button>
+              </div>
+            </div>
+            <div class="row" style="padding-top: 30px;">
+                <div class="col-xs-6">
+                     <h3>Keep your life in sync</h3>
+                    <h5>
+                        TD-List is the easiest way to get stuff done. Whether you’re planning a holiday, sharing a shopping list with a partner or managing multiple work projects, TD-List is here to help you tick off all your personal and professional to-dos.
+                    </h5>
+                    <button id="signUpBtn" class="btn btn-default" type="submit" data-toggle="modal" data-target="#signUpModal">Create Account</button>
+                    <a href="/home">Home</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+      <div id="loginModal" class="modal fade" tabindex="-1" role="dialog">
+              <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Login Page</h4>
+                          </div>
+                          <div class="modal-body">
+                            <form id="loginForm" method="post" action="/login" >
+                              <div class="form-group">
+                                <span class="">
+                                  <i class="glyphicon glyphicon-envelope" icon="email"></i>
+                                </span>
+                                <input class="modalInput" type="email" name="email" class="form-control" id="loginEmail" placeholder="Email" required>
+                              </div>
+                              <div class="form-group">
+                                 <span class="">
+                                  <i class="glyphicon glyphicon-lock" icon="email"></i>
+                                </span>
+                                <input class="modalInput" type="password" name="password" class="form-control" id="loginPassword" placeholder="Password" required>
+                              </div>
+                              <input type="submit" value="Log in" class="btn btn-primary"/>
+                            </form>
+                          </div>
+                          <div class="modal-footer"></div>
+                    </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+         <div id="signUpModal" class="modal fade" tabindex="-1" role="dialog">
+              <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Sign Up</h4>
+                          </div>
+                          <div class="modal-body">
+                            <form>
+                              <div class="form-group">
+                                <label for="name">Name </label>
+                                <input type="text" class="form-control" id="name" placeholder="Surname, Firstname" required>
+                              </div>
+                              <div class="form-group">
+                                <label for="loginEmail">Email </label>
+                                <input type="email" class="form-control" id="loginEmail" placeholder="Email" required>
+                              </div>
+                              <div class="form-group">
+                                <label for="loginPassword">Password</label>
+                                <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
+                              </div>
+                              <button type="submit" class="btn btn-primary">Sign Up</button>
+                            </form>
+                          </div>
+                          <div class="modal-footer"></div>
+                    </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="/js/index.js"></script>
+  </body>
+</html>

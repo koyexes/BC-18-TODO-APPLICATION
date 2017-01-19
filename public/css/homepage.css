@@ -1,0 +1,36 @@
+body {
+    background-image: url("./../images/banner-bg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#left-div {
+    width: 20%;
+}
+
+#title{
+    font-family: "Adobe Caslon Pro Bold";
+    color: white;
+}
+#board-list-button {
+    width: 50%;
+}
+#board-list-div {
+    background-color: azure;
+    width:100%;
+    margin-top: 5px;
+
+}
+
+#list-title {
+    font-family: "Times New Roman";
+    color: white;
+}
+
+#list-div {
+    padding-top: 10px;
+}
+
+
+
+

@@ -1,0 +1,66 @@
+.container-fluid {
+    padding-top: 30px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("./../images/intro-bg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#title h1{
+    font-family: "Adobe Caslon Pro Bold";
+    color: azure;
+}
+#logo{
+    background-image: url("./../images/todo.png");
+    background-size: cover;
+    width:100px;
+    height: 100px;
+}
+
+#loginBtnDiv {
+    padding-top: 20px;
+}
+#loginBtn{
+    color: azure;
+}
+#loginBtn:hover {
+    background: azure;
+    color: blue;
+}
+#loginBtnDiv ,  #loginBtn  {
+    float: right;
+    background: transparent;
+}
+
+h3 {
+    font-family: "Adobe Garamond Pro Bold";
+    font-size: 50px;
+    color: azure;
+}
+h5{
+    font-family: "Times New Roman";
+    font-size: 20px;
+    color: beige;
+}
+
+#signUpBtn {
+    background: transparent;
+    color: azure;
+    font-size: 20px;
+    font-family: "Times New Roman";
+    margin-top: 10px;
+}
+#signUpBtn:hover {
+    background: blue;
+}
+
+.modalInput {
+    border-width:  0px 0px 2px 0px;
+    height: 30px;
+    width: 90%;
+    outline:0;
+    margin-bottom: 20px;
+
+}

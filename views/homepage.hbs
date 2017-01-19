@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="/css/homepage.css" />
+    <title>Homepage</title>
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Start Bootstrap</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div >
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/logout">{{ email }}</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <div class="container" style="padding-top: 80px;" >
+       <div class="row">
+           <div id="left-div" class="col-xs-4 col-lg-4">
+                <div class="row">
+                    <div  class="col-xs-12">
+                       <div id="board" class="row">
+                           <div class="col-xs-12">
+                                <button id="board-list-button" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#board-list-div" aria-expanded="false" aria-controls="collapseExample">
+                                      Todo List
+                               </button>
+                           </div>
+
+                       </div>
+                       <div   class="row">
+                           <div class=" col-xs-12">
+                                 <div style="padding: 5px;" id="board-list-div"  class=" collapse well">
+                                      <a role="button" data-toggle="modal" data-target="#create-board-modal">Create New List</a>
+                                 </div>
+                            </div>
+                      </div>
+
+                    </div>
+                </div>
+         </div>
+           <div id="middle-div" class="col-xs-4 col-lg-4" style="display: none; width: 20%;">
+                <div class="row">
+                   <div class="col-lg-12">
+                       <h2 id="list-title" ></h2>
+                   </div>
+                    <div class="col-lg-12">
+                       <button id="new-list-button"  class="btn btn-primary" data-toggle="modal" data-target="#create-list-modal"> Add Card</button>
+                   </div>
+
+               </div>
+
+                <div  class="row">
+                    <div id="list-div" class="col-lg-12">
+
+                    </div>
+
+                </div>
+           </div>
+     </div>
+    </div>
+
+       {{> modals}}
+
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+   <script src="/js/template.js"></script>
+  <script src="/js/index.js"></script>
+</body>
+</html>
