@@ -1,4 +1,28 @@
+$(document).on('ready', function (e) {
+    var uid = $('#userId').val();
+     $.ajax({
+        type: 'GET',
+        data: {},
+        contentType: 'application/json',
+        url: 'board/all/' + uid,
+        success: function (data) {
+           for (var key in data) {
+                if (!data.hasOwnProperty(key)) continue;
+                var obj = data[key];
+                for (var prop in obj) {
+                    if(!obj.hasOwnProperty(prop)) continue;
+                    if (prop === "title") {
+                        $('#board-list-div').append(newBoard(key, obj[prop]));
+                    }
 
+                }
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+});
 $('#loginForm').on('submit', function(e) {
     e.preventDefault();
     var values = {};
@@ -74,7 +98,7 @@ $('#editBoardForm').on('submit', function(e) {
 // this function make changes to the delete modal
 $('#delete-board-modal').on('show.bs.modal', (e) => {
     $('#delete-board-modal h4').attr("id",$(e.relatedTarget).parents().eq(2).siblings("input").attr("id"));
-    $('#delete-board-modal h4').text("Delete " + $(e.relatedTarget).parents().eq(2).siblings("input").val());
+    $('#delete-board-modal h4').text("Delete " + $(e.relatedTarget).parents().eq(2).siblings("input").val() + " List");
 });
 
 // this function deletes a board
@@ -100,9 +124,33 @@ $('#delete-board-modal button#deleteBoardButton').on('click', () => {
 // this function listens to click events of all boards
 var boardListener = function () {
     var e = window.event;
-    $("#list-title").text($(e.target).val() + " Board List");
-    $("#middle-div").css("display", "block");
+    var boardKey = $(e.srcElement).attr('id').toString();
+    $("#list-title").text($(e.target).val().toUpperCase() + " Cards".toUpperCase());
+    $('#list-div').empty();
     $("#new-list-button").attr("name", $(e.target).attr("id"));
+     $.ajax({
+        type: 'GET',
+        data: {},
+        contentType: 'application/json',
+        url: 'board/' + boardKey + '/list',
+        success: function (data) {
+            for (var key in data) {
+                if (!data.hasOwnProperty(key)) continue;
+                var obj = data[key];
+                for (var prop in obj) {
+                    if(!obj.hasOwnProperty(prop)) continue;
+                    if (prop === "title") {
+                        $('#list-div').append(newList(boardKey, key, obj[prop]));
+                    }
+
+                }
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+     $("#middle-div").css("display", "block");
 
 };
 
@@ -136,15 +184,15 @@ $('#createListForm').on('submit', function(e) {
 });
 
 $('#edit-list-modal').on('show.bs.modal', (e) => {
-    $('#edit-list-modal :input').val($(e.relatedTarget).parents().eq(2).siblings("input").val());
-    $('#edit-list-modal :input').attr("id",$(e.relatedTarget).parents().eq(2).siblings("input").attr("id"));
+    $('#edit-list-modal input[name = title]').val($(e.relatedTarget).parents().eq(2).siblings("input").val());
+    $('#edit-list-modal input[name = title]').attr("id",$(e.relatedTarget).parents().eq(2).siblings("input").attr("id"));
     $('#edit-list-modal button').attr("id",$(e.relatedTarget).parents().eq(2).siblings("input").parent().attr("id"));
 })
 
 $('#editListForm').on('submit', function(e) {
     e.preventDefault();
     var values = {};
-    values.key = $('#edit-list-modal input').attr("id");
+    values.key = $('#edit-list-modal input[name = title]').attr("id");
     values.boardKey = $('#edit-list-modal button').attr("id");
     $('#editListForm :input').each(function () {
         values[this.name] = $(this).val();
@@ -167,7 +215,7 @@ $('#editListForm').on('submit', function(e) {
 
 // this function make changes to the delete modal
 $('#delete-list-modal').on('show.bs.modal', (e) => {
-    $('#delete-list-modal h4').text("Delete " + $(e.relatedTarget).parents().eq(2).siblings("input").val());
+    $('#delete-list-modal h4').text("Delete " + $(e.relatedTarget).parents().eq(2).siblings("input").val() + " Card");
     $('#delete-list-modal h4').attr("id",$(e.relatedTarget).parents().eq(2).siblings("input").attr("id"));
     $('#delete-list-modal button').attr("id",$(e.relatedTarget).parents().eq(2).siblings("input").parent().attr("id"));
 
@@ -192,4 +240,60 @@ $('#delete-list-modal button#deleteListButton').on('click', () => {
     });
 });
 
+var listListener = function () {
+    var e = window.event;
+    console.log(e);
+    var boardKey = $(e.srcElement).parent().attr('id').toString();
+    var listKey = $(e.srcElement).attr('id').toString();
+    $("#task-title").text($(e.target).val().toUpperCase() + " Tasks".toUpperCase());
+    $('#task-div').empty();
+    $("#new-task-button").attr("name", $(e.target).attr("id"));
+    $('#task-board-id').val(boardKey);
+};
+$('#create-task-modal').on('show.bs.modal', (e) => {
+    $('#create-task-modal button').attr("id",$(e.relatedTarget).attr("name"));
+});
 
+
+$('#createTaskForm').on('submit', function(e) {
+    e.preventDefault();
+    var values = {};
+    values.boardKey = $('#task-board-id').val();
+    values.listKey = $('#createTaskForm button').attr("id");
+    $('#createTaskForm :input').each(function () {
+        values[this.name] = $(this).val();
+    });
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(values),
+        contentType: 'application/json',
+        url: '/task',
+        success: function (data) {
+            $('#create-task-modal').modal('hide');
+            $('#task-div').append(newTask(values.boardKey,values.listKey,data.key, values.title));
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+
+});
+
+//
+// var boardKey = $(e.relatedTarget).parents().eq(2).siblings("input").parent().attr('id');
+//     var key = $(e.relatedTarget).parents().eq(2).siblings("input").attr('id');
+//     var values  = {};
+//     values.boardKey = boardKey.toString();
+//      console.log(boardKey, key);
+//      $.ajax({
+//         type: 'GET',
+//         data: values,
+//         contentType: 'application/json',
+//         url:  '/list/' + key.toString(),
+//         success: function (data) {
+//             console.log(data);
+//         },
+//         error: function (error) {
+//             console.log(error);
+//         }
+//     });

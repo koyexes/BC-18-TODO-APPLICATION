@@ -6,15 +6,17 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var hbs = require('hbs');
 
+
 var app = express();
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', 'hbs');
 
-var userObject = {};
+
 var database = firebase.database();
 var ref = database.ref('boards/');
+var userObject = {};
 
 
 
@@ -24,7 +26,6 @@ app.get('/', (request, response) => {
 
 app.post('/login', (request, response) => {
    firebase.auth().signInWithEmailAndPassword(request.body.email.toString(), request.body.password.toString() ).then((value) => {
-       userObject.email = value.email;
        userObject.uid = value.uid;
        response.status(200).send();
     }, (error) => {
@@ -38,7 +39,7 @@ app.post('/login', (request, response) => {
 app.get('/home', (request, response) => {
      firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-         response.render('homepage.hbs', {email : user.email});
+         response.render('homepage.hbs', {email : user.email, uid: user.uid});
       }
     });
 
@@ -46,7 +47,7 @@ app.get('/home', (request, response) => {
 app.get('/logout', (request, response) => {
     firebase.auth().signOut();
     response.redirect('/')
-    userObject = {};
+
 });
 
 
@@ -67,8 +68,22 @@ app.get('/board/:key', (request, response) => {
     ref.child(key).once('value').then((snapshot) => {
         response.send({
             key,
-            title: snapshot.val().title,
+            title: snapshot.val().title
         });
+    });
+});
+
+app.get('/board/all/:uid', (request,response) => {
+   var uid = request.params.uid.toString();
+   ref.orderByChild('uid').equalTo(uid).once('value').then((snapshot) => {
+       response.status(200).send(snapshot.val())
+   }).catch((error) =>console.log(error));
+});
+
+app.get('/board/:key/list', (request, response) => {
+    var key = request.params.key.toString();
+    ref.child(key + '/list').once('value').then((snapshot) => {
+        response.status(200).send(snapshot.val());
     });
 });
 
@@ -90,9 +105,13 @@ app.delete('/board/:key', (request, response) => {
 app.post('/list', (request, response) => {
     var boardKey = request.body.boardKey;
     var title = request.body.title;
+    var dateOfCompletion =  request.body.dateOfCompletion;
+    var description = request.body.description;
     var listRef = ref.child(boardKey + '/list');
     listRef.push({
         title,
+        dateOfCompletion,
+        description
     }).then((value) => response.status(200).send({
         key: value.key,
         title
@@ -100,21 +119,24 @@ app.post('/list', (request, response) => {
 });
 
 app.get('/list/:key', (request, response) => {
-    var boardKey = request.params.boardKey.toString();
-    var listKey = request.params.key.toString();
+    console.log(request);
+    var boardKey = request.body.boardKey;
+    var listKey = request.params.key;
+    console.log(boardKey, listKey);
     ref.child(boardKey + '/list/' + listKey).once('value').then((snapshot) => {
-        response.send({
-            key,
-            title: snapshot.val().title,
-        });
-    });
+        response.send(
+            snapshot.val()
+        );
+    }).catch((error) => console.log(error));
 });
 
 app.put('/list', (request, response) => {
    var boardKey = request.body.boardKey.toString();
    var listKey = request.body.key.toString();
    var title = request.body.title.toString();
-   ref.child(boardKey + '/list/' + listKey).update({title}).then((value) => {
+   var dateOfCompletion =  request.body.dateOfCompletion;
+   var description = request.body.description;
+   ref.child(boardKey + '/list/' + listKey).update({title, dateOfCompletion, description}).then((value) => {
        response.status(200).send({});
    }).catch((error) => console.error(error));
 });
@@ -127,19 +149,20 @@ app.delete('/list/:key', (request, response) => {
     }).catch((error) => console.error(error));
 });
 
-app.post('/card', (request, reponse) => {
+app.post('/task', (request, response) => {
      var boardKey = request.body.boardKey;
      var listKey = request.body.listKey;
      var title = request.body.title;
-     var cardRef = ref.child(boardKey + '/list/' + listKey + '/card');
-     cardRef.push({
-         title
+     var taskRef = ref.child(boardKey + '/list/' + listKey + '/task');
+     taskRef.push({
+         title,
+         completed: "false"
      }).then((value) => {
-         response.send(`Card Created Successfully`);
+         response.status(200).send({key: value.key});
      }).catch((error) => console.error(error));
 });
 
-app.delete('/card/:key', (request, reponse) => {
+app.delete('/task/:key', (request, reponse) => {
      var boardKey = request.body.boardKey.toString();
      var listKey = request.body.listKey.toString();
      var cardKey = request.params.key.toString();
@@ -150,7 +173,7 @@ app.delete('/card/:key', (request, reponse) => {
 });
 
 
-app.listen(3000, () => {
+app.listen(8080, () => {
    console.log('Started on port 3000');
 });
 

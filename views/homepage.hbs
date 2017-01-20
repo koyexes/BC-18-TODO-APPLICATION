@@ -16,7 +16,13 @@
             <div >
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="/logout">{{ email }}</a>
+                        <a role="button">{{ email }}</a>
+                    </li>
+                    <li>
+                        <a href="/logout">logout</a>
+                    </li>
+                    <li>
+                        <input type="hidden" value="{{uid}}" id="userId" style="display: none;"/>
                     </li>
                 </ul>
             </div>
@@ -26,7 +32,7 @@
     </nav>
     <div class="container" style="padding-top: 80px;" >
        <div class="row">
-           <div id="left-div" class="col-xs-4 col-lg-4">
+           <div id="left-div" class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                 <div class="row">
                     <div  class="col-xs-12">
                        <div id="board" class="row">
@@ -39,7 +45,7 @@
                        </div>
                        <div   class="row">
                            <div class=" col-xs-12">
-                                 <div style="padding: 5px;" id="board-list-div"  class=" collapse well">
+                                 <div style="padding: 5px;" id="board-list-div"  class=" well">
                                       <a role="button" data-toggle="modal" data-target="#create-board-modal">Create New List</a>
                                  </div>
                             </div>
@@ -47,26 +53,50 @@
 
                     </div>
                 </div>
-         </div>
-           <div id="middle-div" class="col-xs-4 col-lg-4" style="display: none; width: 20%;">
+            </div>
+           <div id="middle-div" class="col-xs-12 col-sm-12 col-md-6  col-lg-4"  style = "display: none;">
                 <div class="row">
-                   <div class="col-lg-12">
-                       <h2 id="list-title" ></h2>
-                   </div>
-                    <div class="col-lg-12">
-                       <button id="new-list-button"  class="btn btn-primary" data-toggle="modal" data-target="#create-list-modal"> Add Card</button>
+                   <div class="col-xs-12">
+                       <button id="list-title" class="btn btn-success" data-toggle="collapse" data-target="#card-list-div" ></button>
                    </div>
 
                </div>
 
-                <div  class="row">
-                    <div id="list-div" class="col-lg-12">
+                <div  class="row" style="margin-top: 5px;">
+                    <div id="card-list-div" class="well" style="padding-top: 5px;">
+                        <a  id="new-list-button"  role="button"  data-toggle="modal" data-target="#create-list-modal"> Add Card</a>
+                         <div id="list-div" >
 
+                        </div>
                     </div>
-
                 </div>
            </div>
-     </div>
+           <div id="right-div" class="col-xs-12 col-sm-12 col-md-12  col-lg-4"  >
+               <div class="row">
+                   <div class="col-xs-12">
+                       <button id="task-title" class="btn btn-success" data-toggle="collapse" data-target="#card-list-div" >helllo</button>
+                   </div>
+
+               </div>
+               <div class="row" style=" float: right">
+                  <div id="" class="well" style="background-color:white; height: 300px; width: 570px;">
+                      <div class="row">
+                          <div id="task-list-div" class="col-xs-12">
+                              <a role="button" id="new-task-button" data-target="#create-task-modal" data-toggle="modal" >Add New Task</a>
+                              <input type="hidden" value="" id="task-board-id" >
+                              <div id="task-div" >
+
+                                </div>
+
+                          </div>
+                      </div>
+
+                  </div>
+
+               </div>
+
+           </div>
+       </div>
     </div>
 
        {{> modals}}
@@ -77,5 +107,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
    <script src="/js/template.js"></script>
   <script src="/js/index.js"></script>
+    <script>
+
+    </script>
 </body>
 </html>

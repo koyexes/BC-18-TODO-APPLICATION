@@ -24,7 +24,7 @@
             <div class="modal-content">
                   <div style="height: 45px;" class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit Board Title</h4>
+                    <h4 class="modal-title">Change List Title</h4>
                   </div>
                   <div class="modal-body">
                      <form id="editBoardForm" method="post" action="/board">
@@ -62,13 +62,21 @@
             <div class="modal-content">
                   <div style="height: 45px;" class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Create New List</h4>
+                    <h4 class="modal-title">New Card</h4>
                   </div>
                   <div class="modal-body">
                      <form id="createListForm" method="post" action="/list">
                       <div class="form-group">
                         <label for="name">Title </label>
                         <input type="text" class="form-control" id="name" name="title" placeholder="Like 'Game and Recreation'" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="dateOfCompletion">Proposed Time of Completion </label>
+                        <input type="date" class="form-control"  name="dateOfCompletion" >
+                      </div>
+                      <div class="form-group">
+                        <label for="description">Description </label>
+                          <textarea  class="form-control"  name="description" placeholder="Brief Description"></textarea>
                       </div>
                       <button type="submit" class="btn btn-success">Create</button>
                     </form>
@@ -83,13 +91,21 @@
             <div class="modal-content">
                   <div style="height: 45px;" class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Edit List Title</h4>
+                    <h4 class="modal-title">Change Card Title</h4>
                   </div>
                   <div class="modal-body">
                      <form id="editListForm" method="put" action="/list">
                       <div class="form-group">
                         <label for="name">Title </label>
                         <input type="text" class="form-control" name="title" required>
+                      </div>
+                       <div class="form-group">
+                        <label for="dateOfCompletion">Proposed Time of Completion </label>
+                        <input type="date" class="form-control"  name="dateOfCompletion" >
+                      </div>
+                      <div class="form-group">
+                        <label for="description">Description </label>
+                          <textarea  class="form-control"  name="description" placeholder="Brief Description"></textarea>
                       </div>
                       <button type="submit" class="btn btn-success">Save</button>
                     </form>
@@ -111,6 +127,26 @@
                 <div class="modal-footer">
                      <button id="deleteListButton" type="button" class="btn btn-danger">Delete</button>
                 </div>
+            </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+ <div id="create-task-modal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                  <div style="height: 45px;" class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">New Task</h4>
+                  </div>
+                  <div class="modal-body">
+                     <form id="createTaskForm" method="post" action="/task">
+                      <div class="form-group">
+                        <label for="name">Title </label>
+                        <input type="text" class="form-control" id="name" name="title" placeholder="Task to complete" required>
+                      </div>
+                      <button type="submit" class="btn btn-success">Create </button>
+                    </form>
+                  </div>
             </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

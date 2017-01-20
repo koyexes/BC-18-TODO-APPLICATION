@@ -4,8 +4,12 @@ body {
     background-repeat: no-repeat;
 }
 
-#left-div {
-    width: 20%;
+#left-div, #middle-div{
+    width: 25%;
+}
+
+#right-div {
+    width: 50%;
 }
 
 #title{
@@ -20,11 +24,6 @@ body {
     width:100%;
     margin-top: 5px;
 
-}
-
-#list-title {
-    font-family: "Times New Roman";
-    color: white;
 }
 
 #list-div {
