@@ -1,7 +1,9 @@
 body {
+    background-color: #222;
     background-image: url("./../images/banner-bg.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+
 }
 
 #left-div, #middle-div{
@@ -10,6 +12,7 @@ body {
 
 #right-div {
     width: 50%;
+    display: none;
 }
 
 #title{
@@ -28,6 +31,11 @@ body {
 
 #list-div {
     padding-top: 10px;
+}
+
+.tasks {
+    margin-bottom: 5px;
+    width: 100%;
 }
 
 

@@ -8,7 +8,7 @@ var hbs = require('hbs');
 
 
 var app = express();
-app.use(bodyParser.json());
+ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', 'hbs');
@@ -25,6 +25,7 @@ app.get('/', (request, response) => {
 } )
 
 app.post('/login', (request, response) => {
+
    firebase.auth().signInWithEmailAndPassword(request.body.email.toString(), request.body.password.toString() ).then((value) => {
        userObject.uid = value.uid;
        response.status(200).send();
@@ -33,6 +34,13 @@ app.post('/login', (request, response) => {
    }).catch(function(error) {
         response.send('Wrong Username and Password');
     });
+});
+
+app.post('/signup', (request, response) => {
+    console.log(request.body);
+   firebase.auth().createUserWithEmailAndPassword(request.body.signupEmail, request.body.signupPassword).then((value) => {
+       response.status(200).send();
+    }).catch ((error) => console.error(error));
 });
 
 
@@ -119,16 +127,15 @@ app.post('/list', (request, response) => {
 });
 
 app.get('/list/:key', (request, response) => {
-    console.log(request);
     var boardKey = request.body.boardKey;
     var listKey = request.params.key;
-    console.log(boardKey, listKey);
     ref.child(boardKey + '/list/' + listKey).once('value').then((snapshot) => {
         response.send(
             snapshot.val()
         );
     }).catch((error) => console.log(error));
 });
+
 
 app.put('/list', (request, response) => {
    var boardKey = request.body.boardKey.toString();
@@ -162,12 +169,44 @@ app.post('/task', (request, response) => {
      }).catch((error) => console.error(error));
 });
 
-app.delete('/task/:key', (request, reponse) => {
-     var boardKey = request.body.boardKey.toString();
-     var listKey = request.body.listKey.toString();
-     var cardKey = request.params.key.toString();
-     ref.child(boardKey + '/list/' + listKey + '/card/' + cardKey).remove().then((value) => {
-         response.send(`Successfully Deleted`);
+
+app.get('/board/:boardKey/list/:listKey', (request, response) => {
+    var boardKey = request.params.boardKey;
+    var listKey = request.params.listKey;
+    ref.child(boardKey + '/list/' + listKey + '/task').once('value').then((snapshot) => {
+        response.status(200).send(snapshot.val());
+    });
+});
+
+app.delete('/delete/:boardKey/list/:listKey/task/:key', (request, response) => {
+     var boardKey = request.params.boardKey.toString();
+     var listKey = request.params.listKey.toString();
+     var taskKey = request.params.key.toString();
+     ref.child(boardKey + '/list/' + listKey + '/task/' + taskKey).remove().then((value) => {
+         response.status(200).send(taskKey);
+     }).catch((error) => console.error(error));
+
+});
+
+app.put('/update/title/:boardKey/list/:listKey/task/:key', (request, response) => {
+     var boardKey = request.params.boardKey.toString();
+     var listKey = request.params.listKey.toString();
+     var taskKey = request.params.key.toString();
+     var title = request.body.title;
+     ref.child(boardKey + '/list/' + listKey + '/task/' + taskKey).update({title}).then((value) => {
+         response.status(200).send(title);
+     }).catch((error) => console.error(error));
+
+});
+
+
+app.put('/update/completion/:boardKey/list/:listKey/task/:key', (request, response) => {
+     var boardKey = request.params.boardKey.toString();
+     var listKey = request.params.listKey.toString();
+     var taskKey = request.params.key.toString();
+     var completed = request.body.completed.toString();
+     ref.child(boardKey + '/list/' + listKey + '/task/' + taskKey).update({completed}).then((value) => {
+         response.status(200).send(completed);
      }).catch((error) => console.error(error));
 
 });

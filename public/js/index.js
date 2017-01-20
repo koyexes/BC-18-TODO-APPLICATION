@@ -233,6 +233,7 @@ $('#delete-list-modal button#deleteListButton').on('click', () => {
         success: function (data) {
             $('#delete-list-modal').modal('hide');
             $('#list-div ' +  'input#'+values.key).parent().remove();
+            $("#right-div").css("display", "none");
         },
         error: function (error) {
             console.log(error);
@@ -249,6 +250,28 @@ var listListener = function () {
     $('#task-div').empty();
     $("#new-task-button").attr("name", $(e.target).attr("id"));
     $('#task-board-id').val(boardKey);
+    $.ajax({
+        type: 'GET',
+        data: {},
+        contentType: 'application/json',
+        url: 'board/' + boardKey + '/list/' + listKey,
+        success: function (data) {
+            for (var key in data) {
+                if (!data.hasOwnProperty(key)) continue;
+                var obj = data[key];
+                for (var prop in obj) {
+                    if(!obj.hasOwnProperty(prop)) continue;
+                    if (prop === "title") {
+                        $('#task-div').append(newTask(boardKey, listKey, key, obj[prop]));
+                    }
+                }
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+    $("#right-div").css("display", "block");
 };
 $('#create-task-modal').on('show.bs.modal', (e) => {
     $('#create-task-modal button').attr("id",$(e.relatedTarget).attr("name"));
@@ -278,6 +301,85 @@ $('#createTaskForm').on('submit', function(e) {
     });
 
 });
+
+var deleteTask = () => {
+    var e = window.event;
+    $.ajax({
+        type: 'DELETE',
+        data: {},
+        contentType: 'application/json',
+        url: $(e.srcElement).attr('name'),
+        success: function (data) {
+            $('div#'+data).remove();
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+
+};
+
+var updateTaskTitle = () => {
+    var e = window.event;
+    var values = {};
+    values.title = $(e.srcElement).val();
+    $.ajax({
+        type: 'PUT',
+        data: JSON.stringify(values),
+        contentType: 'application/json',
+        url: $(e.srcElement).attr('name'),
+        success: function (data) {
+            $(e.srcElement).val(data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+
+};
+
+
+var taskDone = () => {
+    var e = window.event;
+    console.log(e);
+    var values = {};
+    values.completed = $(e.srcElement).is(':checked');
+    $.ajax({
+        type: 'PUT',
+        data: JSON.stringify(values),
+        contentType: 'application/json',
+        url: $(e.srcElement).attr('name'),
+        success: function (data) {
+            $(e.srcElement).css('background-color', "green");
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+
+};
+
+var signUp = function () {
+    var values = {};
+     $('#signupForm :input').each(function () {
+        values[this.name] = $(this).val();
+    });
+     console.log(values);
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(values),
+        contentType: 'application/json',
+        url: '/signup',
+        success: function (data) {
+            $('#signUpModal').modal('hide');
+            $('#loginModal').modal('show');
+        },
+        error: function (error) {
+            alert('Unable to register your credentials');
+            console.log(error);
+        }
+    });
+};
 
 //
 // var boardKey = $(e.relatedTarget).parents().eq(2).siblings("input").parent().attr('id');

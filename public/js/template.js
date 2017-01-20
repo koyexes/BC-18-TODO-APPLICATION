@@ -30,3 +30,24 @@ var newList=  (boardKey, id, title) => {
       </span>
     </div>`;
 };
+
+var newTask = (boardKey, listKey, id, title) => {
+    return `<div id="${id}" class="row tasks">
+              <div class="col-lg-12">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input type="checkbox" name=/update/completion/${boardKey}/list/${listKey}/task/${id}" onclick="taskDone()" >
+                  </span>
+                  <input type="text" value="${title}" name="/update/title/${boardKey}/list/${listKey}/task/${id}" class="form-control" onblur="updateTaskTitle()">
+                  <span class="input-group-btn dropdown">
+                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" >
+                           <span class="glyphicon glyphicon-option-horizontal"></span>
+                     </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a role="button" data-toggle="modal" >Move</a></li>
+                        <li><a role="button" name="/delete/${boardKey}/list/${listKey}/task/${id}" onclick="deleteTask()" >Delete</a></li>
+                      </ul>
+                  </span>
+                  </div><!-- /input-group -->
+          </div>`;
+};
