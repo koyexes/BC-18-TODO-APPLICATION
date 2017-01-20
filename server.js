@@ -214,7 +214,7 @@ app.put('/update/completion/:boardKey/list/:listKey/task/:key', (request, respon
 });
 
 
-app.listen(process.env.port || 8080, () => {
+app.listen(process.env.PORT || 8080, () => {
    console.log('Started on port 3000');
 });
 
