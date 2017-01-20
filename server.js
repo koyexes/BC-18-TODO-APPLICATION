@@ -8,7 +8,7 @@ var hbs = require('hbs');
 
 
 var app = express();
- app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', 'hbs');
@@ -37,8 +37,10 @@ app.post('/login', (request, response) => {
 });
 
 app.post('/signup', (request, response) => {
-    console.log(request.body);
-   firebase.auth().createUserWithEmailAndPassword(request.body.signupEmail, request.body.signupPassword).then((value) => {
+    var email = request.body.signupEmail;
+    var anotheremail = email;
+    console.log(anotheremail);
+   firebase.auth().createUserWithEmailAndPassword(email, request.body.signupPassword).then((value) => {
        response.status(200).send();
     }).catch ((error) => console.error(error));
 });
