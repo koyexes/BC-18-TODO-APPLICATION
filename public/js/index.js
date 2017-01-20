@@ -151,6 +151,7 @@ var boardListener = function () {
         }
     });
      $("#middle-div").css("display", "block");
+     $("#right-div").css("display", "none");
 
 };
 

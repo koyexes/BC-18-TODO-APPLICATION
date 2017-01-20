@@ -38,7 +38,7 @@ var newTask = (boardKey, listKey, id, title) => {
                   <span class="input-group-addon">
                     <input type="checkbox" name=/update/completion/${boardKey}/list/${listKey}/task/${id}" onclick="taskDone()" >
                   </span>
-                  <input type="text" value="${title}" name="/update/title/${boardKey}/list/${listKey}/task/${id}" class="form-control" onblur="updateTaskTitle()">
+                  <input id="${title}" type="text" value="${title}" name="/update/title/${boardKey}/list/${listKey}/task/${id}" class="form-control" onblur="updateTaskTitle()">
                   <span class="input-group-btn dropdown">
                       <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" >
                            <span class="glyphicon glyphicon-option-horizontal"></span>
