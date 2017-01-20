@@ -28,6 +28,8 @@ var newList=  (boardKey, id, title) => {
             <li><a role="button"  data-target="#delete-list-modal" data-toggle="modal">Delete</a></li>
           </ul>
       </span>
+    
+      
     </div>`;
 };
 

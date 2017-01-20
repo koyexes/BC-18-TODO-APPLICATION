@@ -176,6 +176,7 @@ $('#createListForm').on('submit', function(e) {
         success: function (data) {
             $('#create-list-modal').modal('hide');
             $('#list-div').append(newList(values.boardKey,data.key, data.title));
+            console.log(data);
         },
         error: function (error) {
             console.log(error);
