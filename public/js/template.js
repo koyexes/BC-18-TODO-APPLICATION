@@ -30,17 +30,3 @@ var newList=  (boardKey, id, title) => {
       </span>
     </div>`;
 };
-
-var newTask=  (boardKey, listKey,  id, title) => {
-   return `<div class="row">
-              <div class="col-lg-6">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                    <input type="checkbox" aria-label="...">
-                  </span>
-                  <h3>${title}</h3>
-                </div>
-           </div>`;
-};
-
-
