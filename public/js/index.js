@@ -372,10 +372,11 @@ var signUp = function () {
         url: '/signup',
         success: function (data) {
             $('#signUpModal').modal('hide');
+            alert("Registration Successful, Login in with your details");
             $('#loginModal').modal('show');
         },
         error: function (error) {
-            alert('Unable to register your credentials');
+            alert('User Already Exist');
             console.log(error);
         }
     });
