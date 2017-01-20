@@ -345,13 +345,17 @@ var taskDone = () => {
     console.log(e);
     var values = {};
     values.completed = $(e.srcElement).is(':checked');
+    if(values.completed) {
+        $(e.srcElement).parent().css('background-color', "green");
+    }else {
+        $(e.srcElement).parent().css('background-color', "white");
+    }
     $.ajax({
         type: 'PUT',
         data: JSON.stringify(values),
         contentType: 'application/json',
         url: $(e.srcElement).attr('name'),
         success: function (data) {
-            $(e.srcElement).css('background-color', "green");
         },
         error: function (error) {
             console.log(error);
